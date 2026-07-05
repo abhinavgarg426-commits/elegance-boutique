@@ -3,374 +3,469 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elegance & Co. | Handcrafted Fashion Boutique</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Mithila Threads | Handloom Sarees & Ethnic Wear — Kolkata</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Jost', sans-serif; color: #1a1a1a; line-height: 1.6; }
-        h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 600; }
-        
-        nav { background: #fff; padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 100; }
-        .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; }
+        body { font-family: 'Inter', sans-serif; background: #faf8f5; color: #1a1a1a; overflow-x: hidden; }
+        h1, h2, h3 { font-family: 'DM Serif Display', serif; }
+
+        /* Loader */
+        .loader { position: fixed; inset: 0; background: #1a1a1a; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.6s, visibility 0.6s; }
+        .loader.hide { opacity: 0; visibility: hidden; }
+        .loader-text { color: #c9a96e; font-family: 'DM Serif Display', serif; font-size: 2rem; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+        /* Nav */
+        nav { position: fixed; top: 0; width: 100%; padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; z-index: 100; transition: 0.4s; }
+        nav.scrolled { background: rgba(26,26,26,0.95); backdrop-filter: blur(10px); padding: 0.8rem 5%; }
+        nav.scrolled .logo, nav.scrolled nav ul a { color: #fff; }
+        .logo { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: #1a1a1a; transition: 0.3s; }
         nav ul { display: flex; list-style: none; gap: 2.5rem; }
-        nav a { text-decoration: none; color: #1a1a1a; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; transition: 0.3s; }
-        nav a:hover { color: #c9a96e; }
-        .nav-icons { display: flex; gap: 1.5rem; }
-        .nav-icons a { font-size: 1.1rem; color: #1a1a1a; }
-        
-        .hero { min-height: 90vh; display: flex; align-items: center; background: #f9f7f4; }
-        .hero-content { flex: 1; padding: 5%; }
-        .hero-tag { font-size: 0.75rem; letter-spacing: 4px; text-transform: uppercase; color: #c9a96e; margin-bottom: 1rem; font-weight: 500; }
-        .hero h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 1.5rem; }
-        .hero h1 em { font-style: italic; color: #c9a96e; }
-        .hero p { font-size: 1rem; color: #777; max-width: 450px; margin-bottom: 2.5rem; line-height: 1.8; }
-        .hero-btns { display: flex; gap: 1rem; }
-        .btn-primary { background: #1a1a1a; color: #fff; padding: 1rem 2.5rem; text-decoration: none; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; }
+        nav ul a { color: #1a1a1a; text-decoration: none; font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase; transition: 0.3s; position: relative; }
+        nav ul a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: #c9a96e; transition: 0.3s; }
+        nav ul a:hover::after { width: 100%; }
+        .nav-cart { position: relative; cursor: pointer; }
+        .nav-cart i { font-size: 1.2rem; color: #1a1a1a; transition: 0.3s; }
+        nav.scrolled .nav-cart i { color: #fff; }
+        .cart-count { position: absolute; top: -6px; right: -8px; background: #c9a96e; color: #fff; font-size: 0.6rem; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+        /* Hero — Split layout with image left */
+        .hero { min-height: 100vh; display: flex; position: relative; }
+        .hero-img { flex: 1.2; position: relative; overflow: hidden; }
+        .hero-img::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,0.3) 0%, transparent 60%); z-index: 1; }
+        .hero-img .placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); display: flex; align-items: center; justify-content: center; }
+        .hero-img .placeholder i { font-size: 8rem; color: rgba(201,169,110,0.3); }
+        .hero-content { flex: 0.8; display: flex; flex-direction: column; justify-content: center; padding: 8rem 5% 4rem; position: relative; }
+        .hero-tag { display: inline-flex; align-items: center; gap: 0.5rem; background: #c9a96e; color: #fff; padding: 0.4rem 1rem; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2rem; width: fit-content; }
+        .hero h1 { font-size: 3.2rem; line-height: 1.1; margin-bottom: 1.5rem; opacity: 0; transform: translateY(40px); animation: slideUp 0.8s 0.5s forwards; }
+        .hero p { font-size: 0.95rem; color: #666; max-width: 420px; margin-bottom: 2.5rem; line-height: 1.8; opacity: 0; transform: translateY(30px); animation: slideUp 0.8s 0.7s forwards; }
+        .hero-btns { display: flex; gap: 1rem; opacity: 0; transform: translateY(30px); animation: slideUp 0.8s 0.9s forwards; }
+        .btn-primary { background: #1a1a1a; color: #fff; padding: 1rem 2.5rem; text-decoration: none; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; position: relative; overflow: hidden; }
+        .btn-primary::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); transition: 0.5s; }
+        .btn-primary:hover::before { left: 100%; }
         .btn-primary:hover { background: #c9a96e; }
-        .btn-secondary { background: transparent; color: #1a1a1a; padding: 1rem 2.5rem; text-decoration: none; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; border: 1px solid #1a1a1a; transition: 0.3s; }
+        .btn-secondary { background: transparent; color: #1a1a1a; padding: 1rem 2.5rem; text-decoration: none; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; border: 1px solid #1a1a1a; transition: 0.3s; }
         .btn-secondary:hover { background: #1a1a1a; color: #fff; }
-        .hero-img { flex: 1; height: 90vh; background: #e8e4df; display: flex; align-items: center; justify-content: center; }
-        .hero-img i { font-size: 12rem; color: #c9a96e; opacity: 0.4; }
-        
-        .categories { padding: 5rem 5%; }
-        .section-title { text-align: center; margin-bottom: 3rem; }
-        .section-title h2 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        .section-title p { color: #999; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; }
-        .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
-        .cat-card { position: relative; aspect-ratio: 3/4; background: #f5f0eb; border-radius: 5px; overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        .cat-card i { font-size: 5rem; color: #c9a96e; opacity: 0.5; }
-        .cat-card .overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem; background: linear-gradient(transparent, rgba(0,0,0,0.7)); color: #fff; }
-        .cat-card h3 { font-size: 1.3rem; margin-bottom: 0.3rem; }
-        .cat-card span { font-size: 0.8rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
-        
-        .products { padding: 5rem 5%; background: #fafafa; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-        .product-card { background: #fff; border-radius: 5px; overflow: hidden; transition: 0.3s; }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.08); }
-        .product-img { height: 320px; background: #f5f0eb; display: flex; align-items: center; justify-content: center; }
-        .product-img i { font-size: 4rem; color: #c9a96e; opacity: 0.4; }
-        .product-img .tag { position: absolute; top: 1rem; left: 1rem; background: #c9a96e; color: #fff; padding: 0.3rem 0.8rem; font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase; }
-        .product-content { padding: 1.5rem; }
-        .product-content h3 { font-size: 1.1rem; margin-bottom: 0.3rem; }
-        .product-content .desc { font-size: 0.85rem; color: #999; margin-bottom: 0.8rem; }
-        .product-content .price-row { display: flex; justify-content: space-between; align-items: center; }
-        .product-content .price { font-weight: 600; font-size: 1.2rem; color: #c9a96e; }
-        .product-content .original { font-size: 0.85rem; color: #bbb; text-decoration: line-through; margin-left: 0.5rem; }
-        
-        .about { padding: 5rem 5%; display: flex; gap: 4rem; align-items: center; }
-        .about-img { flex: 1; text-align: center; }
-        .about-img i { font-size: 10rem; color: #c9a96e; opacity: 0.4; }
-        .about-content { flex: 1; }
-        .about-content .tag { font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; color: #c9a96e; margin-bottom: 1rem; }
-        .about-content h2 { font-size: 2.5rem; margin-bottom: 1rem; }
-        .about-content p { color: #777; margin-bottom: 1rem; font-size: 0.95rem; }
-        
-        .testimonials { padding: 5rem 5%; background: #1a1a1a; color: #fff; }
-        .testimonials h2 { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; }
-        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; }
-        .testimonial-card { background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 5px; border: 1px solid rgba(255,255,255,0.1); }
-        .testimonial-card .stars { color: #c9a96e; margin-bottom: 1rem; }
-        .testimonial-card p { font-style: italic; color: #ccc; margin-bottom: 1rem; font-size: 0.95rem; }
-        .testimonial-card h4 { font-size: 0.9rem; }
-        .testimonial-card span { font-size: 0.8rem; color: #888; }
-        
-        .newsletter { padding: 5rem 5%; text-align: center; background: #f9f7f4; }
-        .newsletter h2 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        .newsletter p { color: #888; margin-bottom: 2rem; }
-        .newsletter-form { max-width: 450px; margin: 0 auto; display: flex; gap: 0; }
-        .newsletter-form input { flex: 1; padding: 1rem; border: 1px solid #ddd; border-right: none; font-family: 'Jost', sans-serif; }
-        .newsletter-form button { background: #1a1a1a; color: #fff; padding: 1rem 1.5rem; border: none; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; }
-        
-        .contact { padding: 5rem 5%; max-width: 1000px; margin: 0 auto; }
-        .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
-        .contact-info h2 { font-size: 2rem; margin-bottom: 1rem; }
-        .contact-info > p { color: #777; margin-bottom: 2rem; }
-        .contact-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
-        .contact-item i { color: #c9a96e; margin-top: 0.3rem; }
-        .contact-item strong { display: block; margin-bottom: 0.2rem; }
-        .contact-item span { font-size: 0.9rem; color: #555; }
-        .contact-form input, .contact-form textarea { width: 100%; padding: 0.9rem; border: 1px solid #ddd; border-radius: 0; margin-bottom: 1rem; font-family: 'Jost', sans-serif; }
-        .contact-form textarea { height: 120px; }
-        .contact-form button { padding: 1rem 2.5rem; background: #1a1a1a; color: #fff; border: none; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
-        .contact-form button:hover { background: #c9a96e; }
-        
-        footer { background: #1a1a1a; color: #fff; padding: 3rem 5%; }
-        .footer-top { display: flex; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 2rem; }
-        .footer-brand .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-bottom: 1rem; }
-        .footer-brand p { color: #888; font-size: 0.9rem; max-width: 300px; }
-        .footer-col h4 { font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem; }
-        .footer-col a { display: block; color: #888; text-decoration: none; font-size: 0.9rem; margin-bottom: 0.5rem; transition: 0.3s; }
+        .scroll-indicator { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; animation: bounce 2s infinite; }
+        .scroll-indicator span { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: #999; }
+        .scroll-indicator i { color: #c9a96e; font-size: 1.2rem; }
+        @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+        @keyframes slideUp { to{opacity:1;transform:translateY(0)} }
+
+        /* Marquee */
+        .marquee { background: #c9a96e; padding: 0.8rem 0; overflow: hidden; white-space: nowrap; }
+        .marquee-content { display: inline-block; animation: marquee 20s linear infinite; }
+        .marquee-content span { color: #fff; font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; margin: 0 2rem; }
+        .marquee-content span::before { content: '✦ '; }
+        @keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+        /* Categories */
+        .categories { padding: 6rem 5%; }
+        .section-label { text-align: center; font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; color: #c9a96e; margin-bottom: 0.5rem; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .section-sub { text-align: center; color: #999; font-size: 0.9rem; margin-bottom: 3rem; }
+        .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1000px; margin: 0 auto; }
+        .cat-card { position: relative; aspect-ratio: 2/3; overflow: hidden; cursor: pointer; group: true; }
+        .cat-card .bg { position: absolute; inset: 0; background: #e8e4dc; display: flex; align-items: center; justify-content: center; transition: transform 0.6s; }
+        .cat-card:hover .bg { transform: scale(1.05); }
+        .cat-card .bg i { font-size: 4rem; color: rgba(201,169,110,0.4); transition: 0.4s; }
+        .cat-card:hover .bg i { color: rgba(201,169,110,0.7); }
+        .cat-card .overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem 1.5rem; background: linear-gradient(transparent, rgba(26,26,26,0.9)); color: #fff; }
+        .cat-card h3 { font-family: 'DM Serif Display', serif; font-size: 1.4rem; margin-bottom: 0.3rem; }
+        .cat-card p { font-size: 0.75rem; opacity: 0.7; letter-spacing: 1px; }
+
+        /* Products */
+        .products { padding: 6rem 5%; background: #fff; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 2rem; max-width: 1100px; margin: 0 auto; }
+        .product-card { cursor: pointer; }
+        .product-img { position: relative; aspect-ratio: 3/4; background: #f5f0e8; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 1rem; }
+        .product-img i { font-size: 3.5rem; color: rgba(201,169,110,0.3); transition: 0.4s; }
+        .product-card:hover .product-img i { transform: scale(1.1); color: rgba(201,169,110,0.5); }
+        .product-img .quick-add { position: absolute; bottom: -50px; left: 0; right: 0; background: #1a1a1a; color: #fff; text-align: center; padding: 0.8rem; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; }
+        .product-card:hover .quick-add { bottom: 0; }
+        .product-img .badge { position: absolute; top: 1rem; left: 1rem; background: #c9a96e; color: #fff; padding: 0.3rem 0.8rem; font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; }
+        .product-content { }
+        .product-content h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.3rem; font-family: 'Inter', sans-serif; }
+        .product-content .material { font-size: 0.8rem; color: #999; margin-bottom: 0.5rem; }
+        .product-content .price-row { display: flex; align-items: baseline; gap: 0.5rem; }
+        .product-content .price { font-weight: 600; font-size: 1.1rem; color: #1a1a1a; }
+        .product-content .original { font-size: 0.85rem; color: #bbb; text-decoration: line-through; }
+
+        /* Story section */
+        .story { padding: 6rem 5%; display: flex; gap: 4rem; align-items: center; max-width: 1100px; margin: 0 auto; }
+        .story-img { flex: 1; position: relative; }
+        .story-img .main { width: 100%; aspect-ratio: 3/4; background: #e8e4dc; border-radius: 2px; display: flex; align-items: center; justify-content: center; }
+        .story-img .main i { font-size: 5rem; color: rgba(201,169,110,0.4); }
+        .story-img .accent { position: absolute; bottom: -1.5rem; right: -1.5rem; width: 50%; aspect-ratio: 1; background: #c9a96e; border-radius: 2px; display: flex; align-items: center; justify-content: center; }
+        .story-img .accent i { font-size: 2rem; color: rgba(255,255,255,0.5); }
+        .story-content { flex: 1; }
+        .story-content .tag { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: #c9a96e; margin-bottom: 1rem; }
+        .story-content h2 { font-size: 2.2rem; margin-bottom: 1.5rem; line-height: 1.2; }
+        .story-content p { color: #666; font-size: 0.95rem; line-height: 1.8; margin-bottom: 1rem; }
+        .story-stats { display: flex; gap: 3rem; margin-top: 2rem; }
+        .story-stat .num { font-family: 'DM Serif Display', serif; font-size: 2.5rem; color: #c9a96e; }
+        .story-stat .label { font-size: 0.75rem; color: #999; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Testimonials */
+        .testimonials { padding: 6rem 5%; background: #1a1a1a; color: #fff; }
+        .testimonials .section-label { color: #c9a96e; }
+        .testimonials .section-title { color: #fff; }
+        .testimonials .section-sub { color: rgba(255,255,255,0.4); }
+        .testimonial-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; max-width: 800px; margin: 0 auto; }
+        .testimonial-card { background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 2px; border: 1px solid rgba(255,255,255,0.08); }
+        .testimonial-card .stars { color: #c9a96e; margin-bottom: 1rem; font-size: 0.8rem; }
+        .testimonial-card p { font-size: 0.95rem; color: rgba(255,255,255,0.7); font-style: italic; line-height: 1.8; margin-bottom: 1.5rem; }
+        .testimonial-card h4 { font-size: 0.85rem; font-family: 'Inter', sans-serif; font-weight: 500; }
+        .testimonial-card span { font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+
+        /* Newsletter */
+        .newsletter { padding: 5rem 5%; text-align: center; }
+        .newsletter h2 { font-size: 2rem; margin-bottom: 0.5rem; }
+        .newsletter p { color: #999; font-size: 0.9rem; margin-bottom: 2rem; }
+        .newsletter-form { max-width: 420px; margin: 0 auto; display: flex; border: 1px solid #ddd; }
+        .newsletter-form input { flex: 1; padding: 1rem; border: none; outline: none; font-family: 'Inter', sans-serif; font-size: 0.85rem; }
+        .newsletter-form button { background: #1a1a1a; color: #fff; padding: 1rem 1.5rem; border: none; cursor: pointer; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; }
+        .newsletter-form button:hover { background: #c9a96e; }
+
+        /* Instagram */
+        .instagram { padding: 4rem 0; }
+        .instagram-header { text-align: center; margin-bottom: 2rem; }
+        .instagram-header a { color: #1a1a1a; text-decoration: none; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; }
+        .instagram-header a:hover { color: #c9a96e; }
+        .insta-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px; }
+        .insta-item { aspect-ratio: 1; background: #e8e4dc; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; }
+        .insta-item i { color: rgba(201,169,110,0.3); }
+        .insta-item::after { content: '❤'; position: absolute; color: rgba(255,255,255,0); font-size: 1.5rem; transition: 0.3s; }
+        .insta-item:hover::after { color: #fff; }
+
+        /* Footer */
+        footer { background: #0d0d0d; color: #fff; padding: 4rem 5% 2rem; }
+        .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+        .footer-brand .logo { font-family: 'DM Serif Display', serif; font-size: 1.5rem; margin-bottom: 1rem; }
+        .footer-brand p { color: #666; font-size: 0.85rem; line-height: 1.8; max-width: 280px; }
+        .footer-brand .social { display: flex; gap: 1rem; margin-top: 1.5rem; }
+        .footer-brand .social a { width: 36px; height: 36px; border: 1px solid #333; display: flex; align-items: center; justify-content: center; color: #888; transition: 0.3s; }
+        .footer-brand .social a:hover { border-color: #c9a96e; color: #c9a96e; }
+        .footer-col h4 { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: #c9a96e; margin-bottom: 1.2rem; font-family: 'Inter', sans-serif; }
+        .footer-col a { display: block; color: #666; text-decoration: none; font-size: 0.85rem; margin-bottom: 0.6rem; transition: 0.3s; }
         .footer-col a:hover { color: #c9a96e; }
-        .footer-bottom { border-top: 1px solid #333; padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-        .footer-bottom p { font-size: 0.8rem; color: #666; }
-        .footer-social { display: flex; gap: 1.5rem; }
-        .footer-social a { color: #888; font-size: 1.1rem; transition: 0.3s; }
-        .footer-social a:hover { color: #c9a96e; }
-        
+        .footer-bottom { border-top: 1px solid #222; padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .footer-bottom p { font-size: 0.75rem; color: #444; }
+        .footer-bottom .payment { display: flex; gap: 0.5rem; }
+        .footer-bottom .payment span { background: #1a1a1a; color: #666; padding: 0.3rem 0.6rem; font-size: 0.65rem; border-radius: 2px; }
+
+        /* Scroll animations */
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-delay { opacity: 0; transform: translateY(40px); transition: 0.8s; transition-delay: 0.2s; }
+        .reveal-delay.active { opacity: 1; transform: translateY(0); }
+
+        /* Mobile */
         @media (max-width: 768px) {
             nav ul { display: none; }
             .hero { flex-direction: column; }
-            .hero-content { padding: 6rem 5% 3rem; }
-            .hero-img { width: 100%; height: 50vh; }
+            .hero-img { min-height: 50vh; }
+            .hero h1 { font-size: 2.2rem; }
             .cat-grid { grid-template-columns: repeat(2, 1fr); }
-            .about { flex-direction: column; }
-            .contact-container { grid-template-columns: 1fr; }
-            .newsletter-form { flex-direction: column; }
-            .newsletter-form input { border-right: 1px solid #ddd; }
+            .story { flex-direction: column; }
+            .story-img .accent { display: none; }
+            .testimonial-grid { grid-template-columns: 1fr; }
+            .footer-top { grid-template-columns: 1fr 1fr; }
+            .insta-grid { grid-template-columns: repeat(3, 1fr); }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="logo">Elegance & Co.</div>
+    <div class="loader" id="loader">
+        <div class="loader-text">Mithila Threads</div>
+    </div>
+
+    <nav id="navbar">
+        <div class="logo">Mithila Threads</div>
         <ul>
-            <li><a href="#home">Home</a></li>
             <li><a href="#collections">Collections</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#story">Our Story</a></li>
+            <li><a href="#testimonials">Reviews</a></li>
+            <li><a href="#contact">Visit Us</a></li>
         </ul>
-        <div class="nav-icons">
-            <a href="#"><i class="fas fa-search"></i></a>
-            <a href="#"><i class="fas fa-heart"></i></a>
-            <a href="#"><i class="fas fa-shopping-bag"></i></a>
+        <div class="nav-cart">
+            <i class="fas fa-shopping-bag"></i>
+            <span class="cart-count">2</span>
         </div>
     </nav>
-    
-    <section class="hero" id="home">
+
+    <section class="hero">
+        <div class="hero-img">
+            <div class="placeholder"><i class="fas fa-tshirt"></i></div>
+        </div>
         <div class="hero-content">
-            <div class="hero-tag">New Collection — Summer 2026</div>
-            <h1>Wear What<br><em>Defines You</em></h1>
-            <p>Handcrafted fashion that blends timeless elegance with modern sensibility. Each piece tells a story of artisanal craftsmanship and sustainable luxury.</p>
+            <div class="hero-tag"><i class="fas fa-sparkles"></i> New Monsoon Collection</div>
+            <h1>Where Tradition<br>Meets Taste</h1>
+            <p>Handwoven silk sarees, banarasi dupattas, and contemporary ethnic wear — curated from the finest artisans of Varanasi, Bengal, and Bihar. Each piece is a story five generations in the making.</p>
             <div class="hero-btns">
                 <a href="#collections" class="btn-primary">Shop Collection</a>
-                <a href="#about" class="btn-secondary">Our Story</a>
+                <a href="#story" class="btn-secondary">Our Story</a>
+            </div>
+            <div class="scroll-indicator">
+                <span>Scroll</span>
+                <i class="fas fa-chevron-down"></i>
             </div>
         </div>
-        <div class="hero-img">
-            <i class="fas fa-tshirt"></i>
-        </div>
     </section>
-    
+
+    <div class="marquee">
+        <div class="marquee-content">
+            <span>Free Shipping Pan India on Orders Above ₹2,999</span>
+            <span>Handwoven by 500+ Artisans Across India</span>
+            <span>Bengal Silk · Banarasi Brocade · Patola · Bandhani</span>
+            <span>New Arrivals Every Week · Use Code FIRST20 for 20% Off</span>
+            <span>Free Shipping Pan India on Orders Above ₹2,999</span>
+            <span>Handwoven by 500+ Artisans Across India</span>
+            <span>Bengal Silk · Banarasi Brocade · Patola · Bandhani</span>
+            <span>New Arrivals Every Week · Use Code FIRST20 for 20% Off</span>
+        </div>
+    </div>
+
     <section class="categories" id="collections">
-        <div class="section-title">
-            <h2>Shop by Category</h2>
-            <p>Curated collections for every style</p>
-        </div>
+        <div class="section-label reveal">Explore</div>
+        <h2 class="section-title reveal">Our Collections</h2>
+        <p class="section-sub reveal">Curated with love, worn with pride</p>
         <div class="cat-grid">
-            <div class="cat-card">
-                <i class="fas fa-tshirt"></i>
+            <div class="cat-card reveal-delay">
+                <div class="bg"><i class="fas fa-vest"></i></div>
                 <div class="overlay">
-                    <h3>Dresses</h3>
-                    <span>24 Products</span>
+                    <h3>Sarees</h3>
+                    <p>48 Pieces</p>
                 </div>
             </div>
-            <div class="cat-card">
-                <i class="fas fa-vest"></i>
+            <div class="cat-card reveal-delay">
+                <div class="bg"><i class="fas fa-gem"></i></div>
                 <div class="overlay">
-                    <h3>Tops & Blouses</h3>
-                    <span>32 Products</span>
+                    <h3>Dupattas & Stoles</h3>
+                    <p>32 Pieces</p>
                 </div>
             </div>
-            <div class="cat-card">
-                <i class="fas fa-gem"></i>
+            <div class="cat-card reveal-delay">
+                <div class="bg"><i class="fas fa-cut"></i></div>
                 <div class="overlay">
-                    <h3>Accessories</h3>
-                    <span>18 Products</span>
-                </div>
-            </div>
-            <div class="cat-card">
-                <i class="fas fa-shoe-prints"></i>
-                <div class="overlay">
-                    <h3>Footwear</h3>
-                    <span>15 Products</span>
+                    <h3>Ethnic Suits</h3>
+                    <p>26 Pieces</p>
                 </div>
             </div>
         </div>
     </section>
-    
+
     <section class="products">
-        <div class="section-title">
-            <h2>New Arrivals</h2>
-            <p>Fresh styles just dropped</p>
-        </div>
+        <div class="section-label reveal">Bestsellers</div>
+        <h2 class="section-title reveal">What People Love</h2>
+        <p class="section-sub reveal">Tried, tested, and trusted by 10,000+ customers</p>
         <div class="product-grid">
-            <div class="product-card">
-                <div class="product-img" style="position:relative;">
+            <div class="product-card reveal">
+                <div class="product-img">
                     <i class="fas fa-tshirt"></i>
-                    <span class="tag">New</span>
+                    <span class="badge">Bestseller</span>
+                    <div class="quick-add">Quick Add +</div>
                 </div>
                 <div class="product-content">
-                    <h3>Silk Blend Midi Dress</h3>
-                    <p class="desc">Elegant navy silk blend, perfect for summer evenings</p>
+                    <h3>Kanjeevaram Silk Saree</h3>
+                    <p class="material">Pure silk, gold zari border</p>
                     <div class="price-row">
-                        <div><span class="price">₹3,499</span><span class="original">₹4,999</span></div>
-                        <a href="#" style="color:#c9a96e;text-decoration:none;font-size:0.85rem;">+ Add</a>
+                        <span class="price">₹8,499</span>
+                        <span class="original">₹11,999</span>
                     </div>
                 </div>
             </div>
-            <div class="product-card">
-                <div class="product-img"><i class="fas fa-vest"></i></div>
-                <div class="product-content">
-                    <h3>Crochet Lace Blouse</h3>
-                    <p class="desc">White cotton crochet, hand-finished details</p>
-                    <div class="price-row">
-                        <div><span class="price">₹1,899</span><span class="original">₹2,499</span></div>
-                        <a href="#" style="color:#c9a96e;text-decoration:none;font-size:0.85rem;">+ Add</a>
-                    </div>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-img"><i class="fas fa-gem"></i></div>
-                <div class="product-content">
-                    <h3>Pearl Drop Earrings</h3>
-                    <p class="desc">18K gold plated, freshwater pearls</p>
-                    <div class="price-row">
-                        <div><span class="price">₹999</span><span class="original">₹1,499</span></div>
-                        <a href="#" style="color:#c9a96e;text-decoration:none;font-size:0.85rem;">+ Add</a>
-                    </div>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-img" style="position:relative;">
+            <div class="product-card reveal">
+                <div class="product-img">
                     <i class="fas fa-tshirt"></i>
-                    <span class="tag">Bestseller</span>
+                    <span class="badge">New</span>
+                    <div class="quick-add">Quick Add +</div>
                 </div>
                 <div class="product-content">
-                    <h3>Linen Wide-Leg Trousers</h3>
-                    <p class="desc">Sage green pure linen, relaxed fit</p>
+                    <h3>Chanderi Silk Dupatta</h3>
+                    <p class="material">Silver zari work, handwoven</p>
                     <div class="price-row">
-                        <div><span class="price">₹2,299</span><span class="original">₹3,199</span></div>
-                        <a href="#" style="color:#c9a96e;text-decoration:none;font-size:0.85rem;">+ Add</a>
+                        <span class="price">₹2,199</span>
+                        <span class="original">₹3,199</span>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card reveal">
+                <div class="product-img">
+                    <i class="fas fa-tshirt"></i>
+                    <div class="quick-add">Quick Add +</div>
+                </div>
+                <div class="product-content">
+                    <h3>Bengal Tant Saree</h3>
+                    <p class="material">Soft cotton, hand-block print</p>
+                    <div class="price-row">
+                        <span class="price">₹1,899</span>
+                        <span class="original">₹2,699</span>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card reveal">
+                <div class="product-img">
+                    <i class="fas fa-tshirt"></i>
+                    <span class="badge">Sale</span>
+                    <div class="quick-add">Quick Add +</div>
+                </div>
+                <div class="product-content">
+                    <h3>Banarasi Georgette Suit</h3>
+                    <p class="material">Meenakari work, unstitched</p>
+                    <div class="price-row">
+                        <span class="price">₹4,999</span>
+                        <span class="original">₹7,999</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
-    <section class="about" id="about">
-        <div class="about-img">
-            <i class="fas fa-cut"></i>
+
+    <section class="story" id="story">
+        <div class="story-img reveal">
+            <div class="main"><i class="fas fa-leaf"></i></div>
+            <div class="accent"><i class="fas fa-quote-left"></i></div>
         </div>
-        <div class="about-content">
-            <div class="tag">Our Story</div>
-            <h2>Crafted with Heart</h2>
-            <p>Elegance & Co. was born in 2019 from a simple belief — Indian women deserve access to beautifully crafted, ethically made fashion without the luxury price tag.</p>
-            <p>Every piece in our collection is designed in Mumbai and crafted by a network of 40+ artisans across Rajasthan, Gujarat, and Maharashtra. We use natural fabrics — cotton, linen, silk, khadi — and traditional techniques like block printing, hand embroidery, and weaving that have been passed down through generations.</p>
-            <p>We're committed to sustainable, slow fashion. No mass production. No fast fashion shortcuts. Just quality pieces made to last and designed to make you feel extraordinary.</p>
+        <div class="story-content">
+            <div class="tag reveal">Est. 1987 — Bowbazar, Kolkata</div>
+            <h2 class="reveal">Three Generations<br>of Weaving Dreams</h2>
+            <p class="reveal">Mithila Threads started as a tiny shop in Bowbazar in 1987, run by Ranjit Kumar Ji and his wife Shanti Devi. What started with two handlooms and a vision to bring authentic Bengali weaves to the common household has grown into a trusted name for ethnic wear across India.</p>
+            <p class="reveal">Today, we work directly with over 50 weaver families in Varanasi, Bengal, and Gujarat — every piece sold means a livelihood preserved, a tradition kept alive.</p>
+            <div class="story-stats reveal">
+                <div class="story-stat">
+                    <div class="num">37</div>
+                    <div class="label">Years of Trust</div>
+                </div>
+                <div class="story-stat">
+                    <div class="num">50+</div>
+                    <div class="label">Weaver Families</div>
+                </div>
+                <div class="story-stat">
+                    <div class="num">10K+</div>
+                    <div class="label">Happy Customers</div>
+                </div>
+            </div>
         </div>
     </section>
-    
-    <section class="testimonials">
-        <h2>What Our Customers Say</h2>
+
+    <section class="testimonials" id="testimonials">
+        <div class="section-label reveal">Reviews</div>
+        <h2 class="section-title reveal">What Our Customers Say</h2>
+        <p class="section-sub reveal">Real words from real people</p>
         <div class="testimonial-grid">
-            <div class="testimonial-card">
-                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                <p>"The silk midi dress I bought for my best friend's wedding was absolutely stunning. I got so many compliments! The quality is incredible for the price."</p>
-                <h4>Ananya Reddy</h4>
-                <span>Hyderabad</span>
+            <div class="testimonial-card reveal">
+                <div class="stars">★★★★★</div>
+                <p>"Ordered a Kanjeevaram for my sister's wedding. The quality blew me away — the zari work is exactly like what my grandmother used to show me. Packing was beautiful too. Mithila Threads is now my go-to for all ethnic occasions."</p>
+                <h4>Priya Chakraborty</h4>
+                <span>Kolkata · Verified Buyer</span>
             </div>
-            <div class="testimonial-card">
-                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                <p>"Finally a brand that understands Indian sizing AND style. Everything I've ordered fits perfectly and the craftsmanship reminds me of designer labels. Obsessed!"</p>
-                <h4>Meera Shah</h4>
-                <span>Mumbai</span>
+            <div class="testimonial-card reveal">
+                <div class="stars">★★★★★</div>
+                <p>"I've been buying from them for 8 years now. The prices are genuine, no inflated MRP. My mother refuses to buy from anywhere else. They also helped me pick a saree for my Bengali wedding — the styling advice was incredible."</p>
+                <h4>Ananya Ghosh</h4>
+                <span>Delhi · Verified Buyer</span>
             </div>
         </div>
     </section>
-    
+
     <section class="newsletter">
-        <h2>Join the Elegance Circle</h2>
-        <p>Get early access to new collections, exclusive discounts, and style inspiration.</p>
-        <form class="newsletter-form">
+        <h2 class="reveal">Stay in the Loop</h2>
+        <p class="reveal">New arrivals, festive sales, and weaving stories — straight to your inbox.</p>
+        <form class="newsletter-form reveal" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Subscribed ✓'; this.querySelector('button').style.background='#22c55e';">
             <input type="email" placeholder="Your email address">
             <button type="submit">Subscribe</button>
         </form>
     </section>
-    
-    <section class="contact" id="contact">
-        <div class="contact-container">
-            <div class="contact-info">
-                <h2>Get in Touch</h2>
-                <p>Questions about sizing, orders, or custom requests? We're here to help.</p>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <div>
-                        <strong>Email</strong>
-                        <span>hello@eleganceandco.in</span>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <i class="fab fa-whatsapp"></i>
-                    <div>
-                        <strong>WhatsApp</strong>
-                        <span>+91 98765 43210</span>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <i class="fab fa-instagram"></i>
-                    <div>
-                        <strong>Instagram</strong>
-                        <span>@eleganceandco.in</span>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div>
-                        <strong>Studio</strong>
-                        <span>42 Market Road, Kala Ghoda<br>Mumbai 400001</span>
-                    </div>
-                </div>
-            </div>
-            <div class="contact-form">
-                <form>
-                    <input type="text" placeholder="Your Name">
-                    <input type="email" placeholder="Email Address">
-                    <input type="text" placeholder="Order Number (if applicable)">
-                    <textarea placeholder="How can we help you?"></textarea>
-                    <button type="submit">Send Message</button>
-                </form>
-            </div>
+
+    <section class="instagram">
+        <div class="instagram-header">
+            <a href="#"><i class="fab fa-instagram"></i> @mithilathreads on Instagram</a>
+        </div>
+        <div class="insta-grid">
+            <div class="insta-item"><i class="fas fa-image"></i></div>
+            <div class="insta-item"><i class="fas fa-image"></i></div>
+            <div class="insta-item"><i class="fas fa-image"></i></div>
+            <div class="insta-item"><i class="fas fa-image"></i></div>
+            <div class="insta-item"><i class="fas fa-image"></i></div>
+            <div class="insta-item"><i class="fas fa-image"></i></div>
         </div>
     </section>
-    
-    <footer>
+
+    <footer id="contact">
         <div class="footer-top">
             <div class="footer-brand">
-                <div class="logo">Elegance & Co.</div>
-                <p>Handcrafted fashion for the modern Indian woman. Ethically made, beautifully designed.</p>
+                <div class="logo">Mithila Threads</div>
+                <p>Handwoven ethnic wear sourced directly from India's finest artisans. Every thread tells a story. Every purchase supports a weaver family.</p>
+                <div class="social">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
             </div>
             <div class="footer-col">
                 <h4>Shop</h4>
+                <a href="#">Sarees</a>
+                <a href="#">Dupattas</a>
+                <a href="#">Ethnic Suits</a>
                 <a href="#">New Arrivals</a>
-                <a href="#">Dresses</a>
-                <a href="#">Tops & Blouses</a>
-                <a href="#">Accessories</a>
                 <a href="#">Sale</a>
             </div>
             <div class="footer-col">
                 <h4>Help</h4>
-                <a href="#">Shipping & Returns</a>
+                <a href="#">Shipping Policy</a>
+                <a href="#">Returns & Exchange</a>
                 <a href="#">Size Guide</a>
                 <a href="#">Track Order</a>
                 <a href="#">FAQ</a>
             </div>
             <div class="footer-col">
-                <h4>Company</h4>
-                <a href="#">Our Story</a>
-                <a href="#">Sustainability</a>
-                <a href="#">Careers</a>
-                <a href="#">Press</a>
+                <h4>Visit</h4>
+                <a href="#">42 Bowbazar Street</a>
+                <a href="#">Kolkata 700072</a>
+                <a href="#">West Bengal, India</a>
+                <a href="#">+91 98765 43210</a>
+                <a href="#">hello@mithilathreads.in</a>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2026 Elegance & Co. All rights reserved.</p>
-            <div class="footer-social">
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-pinterest"></i></a>
+            <p>© 2026 Mithila Threads. Made with ❤️ in Kolkata.</p>
+            <div class="payment">
+                <span>💳 UPI</span>
+                <span>💳 Cards</span>
+                <span>💳 Net Banking</span>
+                <span>💳 COD</span>
             </div>
         </div>
     </footer>
+
+    <script>
+        // Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => document.getElementById('loader').classList.add('hide'), 800);
+        });
+
+        // Nav scroll
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal, .reveal-delay').forEach(el => observer.observe(el));
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
 </body>
 </html>
